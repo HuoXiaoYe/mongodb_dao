@@ -56,9 +56,3 @@ module.exports = xiaoye_db
 
 
 let xiaoye = new xiaoye_db("mongodb://localhost:27017","xiaoye")
-// xiaoye._connect((err,db)=>{
-// 	console.log("success")
-// })
-// xiaoye.find("student",{},{page:3,pageSize:5,sort:{"age":-1}},(err,result)=>{
-// 	console.log(result);
-// })
