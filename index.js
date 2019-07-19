@@ -55,4 +55,6 @@ module.exports = xiaoye_db
 
 
 
-let xiaoye = new xiaoye_db("mongodb://localhost:27017","xiaoye")
+// let xiaoye = new xiaoye_db("mongodb://localhost:27017","xiaoye")
+// let xiaoye = new xiaoye_db("mongodb://localhost:27017","xiaoye")
+// let xiaoye = new xiaoye_db("mongodb://localhost:27017","xiaoye")
