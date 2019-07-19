@@ -51,7 +51,7 @@ class xiaoye_db {
 
 
 
-
+module.exports = xiaoye_db
 
 
 
