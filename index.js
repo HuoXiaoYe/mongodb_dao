@@ -26,6 +26,27 @@ class xiaoye_db {
 			})
 		})
 	}
+	find(collectionName,json,args,callback){
+		this._connect((err,db)=>{
+			if(err) return console.log("数据库连接失败")
+			// console.log(arguments.length == 3 && typeof args == "function")
+			if(arguments.length == 3 && typeof args == "function"){
+				callback = args;
+				var skipAmount = 0;
+				var limitNumber = 0;
+				var sortObj = {};
+			}else{
+				var skipAmount = args.pageSize * args.page;
+				var limitNumber = args.pageSize;
+				var sortObj = args.sort;
+			}
+			// console.log(`limit(${limitNumber}).skip(${skipAmount}).sort(${sortObj})`)
+			let dbase = db.db(this.databaseName)
+			dbase.collection(collectionName).find(json).limit(limitNumber).skip(skipAmount).sort(sortObj).toArray((err,result)=>{
+				callback&&callback(err,result)
+			})
+		})
+	}
 }
 
 
@@ -38,12 +59,6 @@ let xiaoye = new xiaoye_db("mongodb://localhost:27017","xiaoye")
 // xiaoye._connect((err,db)=>{
 // 	console.log("success")
 // })
-xiaoye.insert("student",{"name":"xiaobai","age":14},(err, result)=>{
-	if(err) return console.log("添加失败")
-	return console.log(123345)
-})
-
-xiaoye.insert("student",[{"name":"xiaobai2","age":14},{"name":"xiaobai3","age":14}],(err, result)=>{
-	if(err) return console.log("添加失败")
-	return console.log(123345)
-})
+// xiaoye.find("student",{},{page:3,pageSize:5,sort:{"age":-1}},(err,result)=>{
+// 	console.log(result);
+// })
