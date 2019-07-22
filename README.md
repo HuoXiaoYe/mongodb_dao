@@ -11,3 +11,14 @@
 	* collectionName 集合名字
 	* json 若 json 为对象，则增加一条数据，若json为数组，则增加多条数据
 	* callback 回调函数，接受 err result 两个参数
+* 删除(删除多个)
+	* removeData(collectionName, json, callback) 
+	* collectionName 集合名字
+	* json 删除条件
+	* callback 回调函数，接受 err result 两个参数
+* 更新(更新多个)
+	* update(collectionName, json1, json2, callback) 
+	* collectionName 集合名字
+	* json1: 更新数据的条件
+	* json2: 更新后的json
+	* callback 回调函数，接受 err result 两个参数
