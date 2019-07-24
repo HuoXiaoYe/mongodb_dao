@@ -7,7 +7,9 @@ class xiaoye_db {
 		this.databaseName = databaseName;
 	}
 	_connect(callback) {
-		MongoClient.connect(this.urlName, { useNewUrlParser: true }, (err, db) => {
+		MongoClient.connect(this.urlName, {
+			useNewUrlParser: true
+		}, (err, db) => {
 			callback(err, db);
 			db.close() // 关闭数据库
 		})
@@ -39,33 +41,48 @@ class xiaoye_db {
 				var limitNumber = 0;
 				var sortObj = {};
 			} else {
-				var skipAmount = args.pageSize * args.page;
-				var limitNumber = args.pageSize;
-				var sortObj = args.sort;
+				var skipAmount = args.pageSize * args.page || 0;
+				var limitNumber = args.pageSize || 0;
+				var sortObj = args.sort || {};
 			}
 			let dbase = db.db(this.databaseName)
-			dbase.collection(collectionName).find(json).limit(limitNumber).skip(skipAmount).sort(sortObj).toArray((err, result) => {
+			dbase.collection(collectionName).find(json).limit(limitNumber).skip(skipAmount).sort(sortObj).toArray((err,
+				result) => {
 				// console.log(result)
 				callback && callback(err, result)
 			})
 		})
 	}
-	update(collectionName, json1, json2, callback){ // 更新函数
-		this._connect((err,db)=>{
-			if(err) return console.log("数据库连接失败")
+	update(collectionName, json1, json2, callback) { // 更新函数
+		this._connect((err, db) => {
+			if (err) return console.log("数据库连接失败")
 			let dbase = db.db(this.databaseName)
-			dbase.collection(collectionName).updateMany(json1,{$set:json2},(err,result)=>{
-				callback&&callback(err,result)
+			dbase.collection(collectionName).updateMany(json1, {
+				$set: json2
+			}, (err, result) => {
+				callback && callback(err, result)
 			})
 		})
 	}
-	removeData(collectionName, json, callback){ // 更新函数
-		this._connect((err,db)=>{
-			if(err) return console.log("数据库连接失败")
+	removeData(collectionName, json, callback) { // 删除函数
+		this._connect((err, db) => {
+			if (err) return console.log("数据库连接失败")
 			let dbase = db.db(this.databaseName)
-			dbase.collection(collectionName).deleteMany(json,(err,result)=>{
-				callback&&callback(err,result)
+			dbase.collection(collectionName).deleteMany(json, (err, result) => {
+				callback && callback(err, result)
 			})
+		})
+	}
+
+
+	getAllCount(collectionName, callback) { // 获取所有个数
+		this._connect((err, db) => {
+			if (err) return console.log("数据库连接失败")
+			let dbase = db.db(this.databaseName)
+			dbase.collection(collectionName).count({}).then((count) => {
+				callback(count);
+				db.close();
+			});
 		})
 	}
 }
@@ -73,6 +90,3 @@ class xiaoye_db {
 
 
 module.exports = xiaoye_db
-
-
-
