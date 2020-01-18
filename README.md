@@ -1,4 +1,4 @@
-> 使用面向的方法 封装了 node中 对  mongodb 的增删改查操作
+> 使用面向对象的方法 封装了 node中 对  mongodb 的增删改查操作
 
 * 查找
 	* find(collectionName,json,args,callback) 实例方法 可以进行分页查找，排序查找 
